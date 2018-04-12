@@ -8,12 +8,14 @@ router.post('/', function(req, res) {
     var description = req.body.log.description;
     var result = req.body.log.result;
     var owner = req.user.id;
+    var def = req.body.log.def;
 
     Log
     .create({
         description: description,
         result: result,
-        owner: owner
+        owner: owner,
+        def: def
     })
     .then(
         function createSuccess(createLog) {
@@ -69,11 +71,13 @@ router.put('/:id', function(req, res) {
         var data = req.params.id; 
         var log = req.body.log.result;
         var description = req.body.log.description;
+        var def = req.body.log.def;
 
         Log
             .update({ 
                 result: log,
-                description: description
+                description: description,
+                def: def
             },
             {where: {id:data}, returning: true, plain: true} 
             ).then(

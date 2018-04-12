@@ -41,10 +41,10 @@ class App extends Component {
       return (
         <Switch>
           <Route path='/' exact>
-            <Splash />
+            <Splash token = {this.state.sessionToken}/>
             
           </Route>
-        </Switch>
+        </Switch >
       )
     } else {
       return (

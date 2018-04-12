@@ -6,25 +6,32 @@ class WorkoutCreate extends Component {
         super();
         this.state = {
             result: '',
-            type: '',
-            notes: ''
+            def: '',
+            description: ''
         }
     }
     
     handleChange = (event) => {
-        event.target.value
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+        
     }
 
     handleSubmit = (event) => {
-        // fetch("http://localhost:3000/api/log", {
-        //     method: 'POST',
-        //     body: JSON.stringify({user: this.state}),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json'
-        //     })
-        // })
-        // .then(response => response.json())
+        console.log(this.state);
+        fetch("http://localhost:3000/api/log/", {
+            method: 'POST',
+            body: JSON.stringify({log: this.state}),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token
+            })
+        })
+        .then(response => response.json())
+        .then(workoutData => console.log(workoutData));
         
+
         event.preventDefault();
         
     }
@@ -34,37 +41,24 @@ class WorkoutCreate extends Component {
                 <h3>Log a Workout</h3>
                 <br/>
                 <Form onSubmit={this.handleSubmit}>
-                <FormGroup Row>
-                    <Label for="result" sm={2}>Result</Label>
-                </FormGroup>
-                <FormGroup Row>
-                    <Col sm={3}>
-                        <Input type="text" name="Result" id="Result" placeholder="Result" onChange={this.handleChange} />
-                    </Col>
-                </FormGroup>
-                <FormGroup Row>
-                        <Col sm={3}>
-                            <Label for="type">Type</Label>
-                            <Input type="select" name="type" id="type">
+                    <FormGroup>
+                        <Label for="result" sm={2}>Result</Label>
+                        <Input type="text" name="result" id="result" placeholder="Result" onChange={this.handleChange} />
+                    </FormGroup>
+                    <FormGroup>
+                            <Label for="def">Type</Label>
+                            <Input type="select" name="def" id="def" onChange={this.handleChange}>
                                 <option></option>
                                 <option value="Time">Time</option>
                                 <option value="Weight">Weight</option>
                                 <option value="Distance">Distance</option>
                             </Input>
-                        </Col>
-                </FormGroup>
-                <FormGroup Row>
-                    <Label for="notes" sm={2}>Notes</Label>
-                </FormGroup>
-                <FormGroup Row>
-                    <Col sm={3}>
-                        <Input type="text" name="notes" id="notes" placeholder="Notes" />
-                    </Col>
-                </FormGroup>
-                <FormGroup Row>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="description" sm={2}>Notes</Label>
+                        <Input type="text" name="description" id="description" placeholder="Enter description" onChange={this.handleChange}/>
+                    </FormGroup>
                 <Button type="submit">Submit</Button>
-                </FormGroup>
-
             </Form>
             </div>
         );

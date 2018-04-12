@@ -5,7 +5,7 @@ class WorkoutIndex extends Component {
     render() {
         return (
           <div>
-              <WorkoutCreate />
+              <WorkoutCreate token = {this.props.token} />
           </div>  
     )}
 }

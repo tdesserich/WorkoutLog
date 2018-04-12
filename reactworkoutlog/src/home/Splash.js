@@ -4,7 +4,7 @@ import WorkoutIndex from '../workouts/WorkoutIndex';
 const Splash = (props) => {  
         return (
         <div> Welcome User
-            <WorkoutIndex />
+            <WorkoutIndex token = {props.token} />
         </div>    
     )
   }
