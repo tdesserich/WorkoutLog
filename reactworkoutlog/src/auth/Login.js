@@ -6,7 +6,7 @@ class Login extends Component {
         super()
         this.state = {
             username: '',
-            password: ''
+            passwordhash: ''
         }
     }
 
@@ -25,7 +25,7 @@ class Login extends Component {
             })
         })
         .then(response => response.json())
-        .then(data => this.props.setToken) 
+        .then(data => this.props.setToken(data.sessionToken)) 
         
         event.preventDefault()
     }
@@ -33,15 +33,17 @@ class Login extends Component {
     render(){
         return(
             <div>
-                <h1>Login</h1>
-                <Form >
-                    <FormGroup onSubmit = {this.handleSubmit}>
-                        <Label for="username">Username</Label>
+                <h1 style={{textAlign: 'left'}}>Login</h1>
+                <h6 style={{textAlign: 'left'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus repellat, atque nulla, soluta vero reprehenderit numquam incidunt, rem quaerat quos voluptatum perferendis. Distinctio culpa iste atque blanditiis placeat.</h6>
+                <Form onSubmit = {this.handleSubmit}>
+                    <FormGroup style={{textAlign: 'left'}}>
+                        <br/>
+                        <Label for="username" style={{textAlign: 'left'}}>Username</Label>
                         <Input name="username" type="text" placeholder="Enter username" onChange={this.handleChange}/>
                      </FormGroup> 
-                     <FormGroup>
+                     <FormGroup style={{textAlign: 'left'}}>
                         <Label for="password">Password</Label>
-                        <Input name="password" type="password" placeholder="Enter password" onChange={this.handleChange}/>
+                        <Input name="passwordhash" type="password" placeholder="Enter password" onChange={this.handleChange}/>
                      </FormGroup> 
                      <Button type="submit">Submit</Button>   
                 </Form>

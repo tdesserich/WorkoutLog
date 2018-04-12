@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
-import NavBar from './home/NavBar';
 import Auth from './auth/Auth';
+import NavBar from './home/NavBar';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
+import Splash from './home/Splash';
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       sessionToken: ''
@@ -12,17 +17,54 @@ class App extends Component {
   }
 
   setSessionState = (token) => {
-    this.setState({sessionToken: token})
     localStorage.setItem('token', token);
+    this.setState({ sessionToken: token });
+
   }
-  
-  
-    render() {
+
+  componentWillMount() {
+    const token = localStorage.getItem('token')
+    if (token && !this.state.sessionToken) {
+      this.setState({ sessionToken: token }); 
+    }
+  }
+
+  logout = () => {
+    this.setState({
+      sessionToken: '',  
+    });
+    localStorage.clear();
+  }  
+
+  protectedViews = () => {
+    if (this.state.sessionToken === localStorage.getItem('token')) {
+      return (
+        <Switch>
+          <Route path='/' exact>
+            <Splash />
+            
+          </Route>
+        </Switch>
+      )
+    } else {
+      return (
+        <Route path="/auth" >
+          <Auth setToken={this.setSessionState}/>
+        </Route>
+      )
+    }
+
+  }
+
+  render() {
     return (
-      <div className="App">
-        <NavBar/>
-        <Auth setToken={this.setSessionState}/>
-      </div>
+      <Router>
+        <div>
+          <NavBar logout={this.logout}/>
+          {this.protectedViews()}
+        </div>
+      </Router>
+
     );
   }
 }

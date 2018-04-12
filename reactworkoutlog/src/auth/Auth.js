@@ -8,7 +8,7 @@ const Auth = (props) => {
         <Container className="auth-container">
             <Row>
                 <Col md="6">
-                    <Signup />
+                    <Signup setToken={props.setToken}/>
                 </Col>
                 <Col md="6">
                     <Login setToken={props.setToken} />

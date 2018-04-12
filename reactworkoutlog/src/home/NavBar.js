@@ -6,7 +6,8 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink, 
+  NavLink,
+  Button 
 } from 'reactstrap';
 
   class NavBar extends Component{
@@ -32,11 +33,14 @@ import {
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/components/">Sign In</NavLink>
+                    <Button type="submit">
+                      <NavLink onClick={this.props.logout}>Logout</NavLink>
+                    </Button>
                   </NavItem>
                 </Nav>
               </Collapse>
             </Navbar>
+            <br/>
           </div>
         );
       }
